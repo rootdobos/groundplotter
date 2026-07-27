@@ -1,0 +1,17 @@
+<hlm-command>
+  <hlm-command-input placeholder="Type a command" />
+  <hlm-command-list>
+    <hlm-command-group>
+      <hlm-command-group-label>Elements</hlm-command-group-label>
+      @for (element of elementService.elements(); track element.id) {
+        <button hlm-command-item value={{element.name}}>
+          {{element.name}}
+        </button>
+      }
+      <button hlm-command-item value="Calendar">
+        Calendar
+      </button>
+    </hlm-command-group>
+    <hlm-command-separator />
+  </hlm-command-list>
+</hlm-command>
