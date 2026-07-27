@@ -62,6 +62,66 @@ export class ElementService {
     "name": "Caterpie",
     "group": "small",
     "tag": ["Bug"]
+  },
+  {
+    "id": 11,
+    "name": "Metapod",
+    "group": "small",
+    "tag": ["Bug"]
+  },
+  {
+    "id": 12,
+    "name": "Butterfree",
+    "group": "medium",
+    "tag": ["Bug", "Flying"]
+  },
+  {
+    "id": 13,
+    "name": "Weedle",
+    "group": "small",
+    "tag": ["Bug", "Poison"]
+  },
+  {
+    "id": 14,
+    "name": "Kakuna",
+    "group": "small",
+    "tag": ["Bug", "Poison"]
+  },
+  {
+    "id": 15,
+    "name": "Beedrill",
+    "group": "medium",
+    "tag": ["Bug", "Poison"]
+  },
+  {
+    "id": 16,
+    "name": "Pidgey",
+    "group": "small",
+    "tag": ["Normal", "Flying"]
+  },
+  {
+    "id": 17,
+    "name": "Pidgeotto",
+    "group": "medium",
+    "tag": ["Normal", "Flying"]
+  },
+  {
+    "id": 18,
+    "name": "Pidgeot",
+    "group": "large",
+    "tag": ["Normal", "Flying"]
+  },
+  {
+    "id": 19,
+    "name": "Rattata",
+    "group": "small",
+    "tag": ["Normal"]
+  },
+  {
+    "id": 20,
+    "name": "Raticate",
+    "group": "medium",
+    "tag": ["Normal"]
   }
 ])
 groups = computed( ()=>{

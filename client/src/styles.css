@@ -6,13 +6,10 @@
 @import '@spartan-ng/brain/hlm-tailwind-preset.css';
 /* You can add global styles to this file, and also import other style files */
 
-html,
-body {
-  @apply h-full;
+html, body {
+  @apply h-full m-0;
 }
-app-root {
-  @apply block h-screen;
-}
+
 :root {
   color-scheme: light;
 
