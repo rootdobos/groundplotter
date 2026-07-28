@@ -1,0 +1,242 @@
+[
+  {
+    "id": 1,
+    "name": "Bulbasaur",
+    "group": "medium",
+    "tag": ["Grass", "Poison"]
+  },
+  {
+    "id": 2,
+    "name": "Ivysaur",
+    "group": "medium",
+    "tag": ["Grass", "Poison"]
+  },
+  {
+    "id": 3,
+    "name": "Venusaur",
+    "group": "large",
+    "tag": ["Grass", "Poison"]
+  },
+  {
+    "id": 4,
+    "name": "Charmander",
+    "group": "small",
+    "tag": ["Fire"]
+  },
+  {
+    "id": 5,
+    "name": "Charmeleon",
+    "group": "medium",
+    "tag": ["Fire"]
+  },
+  {
+    "id": 6,
+    "name": "Charizard",
+    "group": "large",
+    "tag": ["Fire", "Flying"]
+  },
+  {
+    "id": 7,
+    "name": "Squirtle",
+    "group": "small",
+    "tag": ["Water"]
+  },
+  {
+    "id": 8,
+    "name": "Wartortle",
+    "group": "medium",
+    "tag": ["Water"]
+  },
+  {
+    "id": 9,
+    "name": "Blastoise",
+    "group": "large",
+    "tag": ["Water"]
+  },
+  {
+    "id": 10,
+    "name": "Caterpie",
+    "group": "small",
+    "tag": ["Bug"]
+  },
+  {
+    "id": 11,
+    "name": "Metapod",
+    "group": "small",
+    "tag": ["Bug"]
+  },
+  {
+    "id": 12,
+    "name": "Butterfree",
+    "group": "medium",
+    "tag": ["Bug", "Flying"]
+  },
+  {
+    "id": 13,
+    "name": "Weedle",
+    "group": "small",
+    "tag": ["Bug", "Poison"]
+  },
+  {
+    "id": 14,
+    "name": "Kakuna",
+    "group": "small",
+    "tag": ["Bug", "Poison"]
+  },
+  {
+    "id": 15,
+    "name": "Beedrill",
+    "group": "medium",
+    "tag": ["Bug", "Poison"]
+  },
+  {
+    "id": 16,
+    "name": "Pidgey",
+    "group": "small",
+    "tag": ["Normal", "Flying"]
+  },
+  {
+    "id": 17,
+    "name": "Pidgeotto",
+    "group": "medium",
+    "tag": ["Normal", "Flying"]
+  },
+  {
+    "id": 18,
+    "name": "Pidgeot",
+    "group": "large",
+    "tag": ["Normal", "Flying"]
+  },
+  {
+    "id": 19,
+    "name": "Rattata",
+    "group": "small",
+    "tag": ["Normal"]
+  },
+  {
+    "id": 20,
+    "name": "Raticate",
+    "group": "medium",
+    "tag": ["Normal"]
+  },
+  {
+    "id": 21,
+    "name": "Spearow",
+    "group": "small",
+    "tag": ["Normal", "Flying"]
+  },
+  {
+    "id": 22,
+    "name": "Fearow",
+    "group": "large",
+    "tag": ["Normal", "Flying"]
+  },
+  {
+    "id": 23,
+    "name": "Ekans",
+    "group": "medium",
+    "tag": ["Poison"]
+  },
+  {
+    "id": 24,
+    "name": "Arbok",
+    "group": "large",
+    "tag": ["Poison"]
+  },
+  {
+    "id": 25,
+    "name": "Pikachu",
+    "group": "small",
+    "tag": ["Electric"]
+  },
+  {
+    "id": 26,
+    "name": "Raichu",
+    "group": "medium",
+    "tag": ["Electric"]
+  },
+  {
+    "id": 27,
+    "name": "Sandshrew",
+    "group": "small",
+    "tag": ["Ground"]
+  },
+  {
+    "id": 28,
+    "name": "Sandslash",
+    "group": "medium",
+    "tag": ["Ground"]
+  },
+  {
+    "id": 29,
+    "name": "Nidoran♀",
+    "group": "small",
+    "tag": ["Poison"]
+  },
+  {
+    "id": 30,
+    "name": "Nidorina",
+    "group": "medium",
+    "tag": ["Poison"]
+  },
+  {
+    "id": 31,
+    "name": "Nidoqueen",
+    "group": "large",
+    "tag": ["Poison", "Ground"]
+  },
+  {
+    "id": 32,
+    "name": "Nidoran♂",
+    "group": "small",
+    "tag": ["Poison"]
+  },
+  {
+    "id": 33,
+    "name": "Nidorino",
+    "group": "medium",
+    "tag": ["Poison"]
+  },
+  {
+    "id": 34,
+    "name": "Nidoking",
+    "group": "large",
+    "tag": ["Poison", "Ground"]
+  },
+  {
+    "id": 35,
+    "name": "Clefairy",
+    "group": "small",
+    "tag": ["Fairy"]
+  },
+  {
+    "id": 36,
+    "name": "Clefable",
+    "group": "medium",
+    "tag": ["Fairy"]
+  },
+  {
+    "id": 37,
+    "name": "Vulpix",
+    "group": "small",
+    "tag": ["Fire"]
+  },
+  {
+    "id": 38,
+    "name": "Ninetales",
+    "group": "medium",
+    "tag": ["Fire"]
+  },
+  {
+    "id": 39,
+    "name": "Jigglypuff",
+    "group": "small",
+    "tag": ["Normal", "Fairy"]
+  },
+  {
+    "id": 40,
+    "name": "Wigglytuff",
+    "group": "medium",
+    "tag": ["Normal", "Fairy"]
+  }
+]
