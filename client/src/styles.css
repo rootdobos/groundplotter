@@ -5,7 +5,10 @@
 
 @import '@spartan-ng/brain/hlm-tailwind-preset.css';
 /* You can add global styles to this file, and also import other style files */
-
+.leaflet-container img.leaflet-image-layer {
+  max-width: none;
+  height: auto;
+}
 
 :root {
   color-scheme: light;
