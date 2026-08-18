@@ -1,5 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, Component, inject } from '@angular/core';
 import * as L from 'leaflet';
+import { ElementService } from '../../core/services/element.service';
 
 @Component({
   selector: 'app-map',
@@ -11,6 +12,8 @@ export class MapComponent implements AfterViewInit {
   private resizeObserver!: ResizeObserver;
   private map!: L.Map;
   private cdr = inject(ChangeDetectorRef);
+  private elementService = inject(ElementService);
+  private selectedPoint?: L.Circle;
   ngAfterViewInit(): void {
     // image coordinates need to be stored
     const bounds: L.LatLngBoundsExpression = [
@@ -29,6 +32,8 @@ export class MapComponent implements AfterViewInit {
       minZoom: -10,
       zoomSnap: 0,
       zoomDelta: 0.1,
+      zoomControl:false,
+      dragging: false
     });
 
     L.imageOverlay(
@@ -43,7 +48,7 @@ export class MapComponent implements AfterViewInit {
     this.map.setMinZoom(zoom);
     this.map.setMaxZoom(zoom);
 
-    //this code doesn't work yet
+    //--------------this code doesn't work yet
     const mapElement = document.getElementById('map')!;
     this.resizeObserver = new ResizeObserver(() => {
       requestAnimationFrame(() => {
@@ -56,8 +61,21 @@ export class MapComponent implements AfterViewInit {
       });
     });
     this.resizeObserver.observe(mapElement);
+    //------------
+    //draw the elements by coordinates
+    const deployedElements = this.elementService.getDeployedElements();
+    deployedElements.forEach((coord) => {
+      L.circle([coord.y, coord.x], { radius: 10 }).addTo(this.map);
+    });
+    //add element on clicking
+    this.map.on('click', (event: L.LeafletMouseEvent) => {
+      this.selectedPoint?.remove();
+      const { lat, lng } = event.latlng;
+      this.selectedPoint = L.circle([lat, lng], {
+        radius: 10,
+      }).addTo(this.map);
+    });
   }
-
   ngOnDestroy(): void {
     this.resizeObserver?.disconnect();
     this.map?.remove();
