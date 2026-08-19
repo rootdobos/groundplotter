@@ -26,7 +26,10 @@ export class ElementService {
   getDeployedElements() {
     return [{ x: 200, y: 300 }];
   }
-  setHoveredElement(id:string){
-    this.hoveredElement.set(this.elements().find(x => x.id === +id))
+  setHoveredElement(id:string | undefined){
+    if(id)
+      this.hoveredElement.set(this.elements().find(x => x.id === +id))
+    else
+      this.hoveredElement.set(undefined)
   }
 }

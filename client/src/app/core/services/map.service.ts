@@ -110,6 +110,7 @@ export class MapService {
     });
     newCircle.on('mouseout', ()=>{
         this.elementService.hoverCardOpen.set('closed');
+        this.elementService.setHoveredElement(undefined)
     })
 
     this.circles.set(id, newCircle);
