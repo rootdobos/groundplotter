@@ -1,12 +1,21 @@
-<div id="map" class="w-full h-full"></div>
-<hlm-popover [state]="getPopoverState()" #popover="brnPopover" >
+<div #mapContainer class="relative h-full w-full">
+  <div #popoverAnchor class="pointer-events-none absolute h-px w-px"></div>
+  <div id="map" class="w-full h-full"></div>
+</div>
+
+<hlm-popover
+  [state]="getPopoverState()"
+  [attachTo]="popoverAnchor"
+  sideOffset="0"
+  #popover="brnPopover"
+>
   <button hlmPopoverTrigger>
     <!-- trigger -->
   </button>
 
   <hlm-popover-content *hlmPopoverPortal="let ctx">
     @if (getHoveredElement(); as el) {
-        <p>{{el.name}}</p>
+      <p>{{ el.name }}</p>
     }
   </hlm-popover-content>
 </hlm-popover>

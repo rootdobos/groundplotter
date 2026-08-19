@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, effect, inject } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, effect, ElementRef, inject, ViewChild } from '@angular/core';
 import { ElementService } from '../../core/services/element.service';
 import { MapService } from '../../core/services/map.service';
 import { HlmPopoverImports } from "../../../../libs/ui/popover/src";
@@ -10,6 +10,9 @@ import { HlmPopoverImports } from "../../../../libs/ui/popover/src";
   styleUrl: './map.component.css',
 })
 export class MapComponent implements AfterViewInit {
+  @ViewChild('popoverAnchor')
+  popoverAnchor!: ElementRef<HTMLDivElement>;
+
   private elementService = inject(ElementService);
   private mapService = inject(MapService);
   constructor() {
@@ -24,6 +27,7 @@ export class MapComponent implements AfterViewInit {
   }
   ngAfterViewInit(): void {
     this.mapService.initializeMap(this.elementService.elements())
+    this.mapService.anchorElement = this.popoverAnchor;
   }
   getPopoverState(){
     return this.elementService.hoverCardOpen();
