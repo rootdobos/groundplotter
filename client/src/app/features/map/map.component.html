@@ -13,7 +13,11 @@
     <!-- trigger -->
   </button>
 
-  <hlm-popover-content *hlmPopoverPortal="let ctx">
+  <hlm-popover-content
+    *hlmPopoverPortal="let ctx"
+    (mouseenter)="onHoverCardMouseEntered()"
+    (mouseleave)="onHoverCardMouseLeft()"
+  >
     @if (getHoveredElement(); as el) {
       <h2 class="text-base mx-auto font-semibold leading-tight tracking-tight">{{ el.name }}</h2>
       <p class="mt-1 text-sm text-muted-foreground">

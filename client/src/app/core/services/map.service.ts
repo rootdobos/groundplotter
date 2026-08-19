@@ -12,6 +12,8 @@ export class MapService {
   private resizeObserver!: ResizeObserver;
   anchorElement!: ElementRef<HTMLDivElement>;
 
+  private hoverCloseTimeout?: ReturnType<typeof setTimeout>;
+
   addMapElementDialogState = signal<BrnDialogState>('closed');
   clickPosition = signal<{ lat: number; lng: number } | null>(null);
   initializeMap(elements: Element[]) {
@@ -97,8 +99,8 @@ export class MapService {
     });
     this.addMapElementDialogState.set('open');
   }
-  addCircleAfterMapDialog(lat:number, lng:number, id:string){
-    this.addCircle(lat,lng,id, this.color)
+  addCircleAfterMapDialog(lat: number, lng: number, id: string) {
+    this.addCircle(lat, lng, id, this.color);
   }
   addCircle(lat: number, lng: number, id: string, color: string) {
     const newCircle = L.circle([lat, lng], {
@@ -113,17 +115,17 @@ export class MapService {
       L.DomEvent.stopPropagation(event);
     });
     newCircle.on('mouseover', (event: L.LeafletMouseEvent) => {
+      clearTimeout(this.hoverCloseTimeout);
       const point = this.map.latLngToContainerPoint(event.latlng);
-      this.elementService.hoverPosition.set({ x: point.x, y: point.y });
-      this.elementService.setHoveredElement(id);
-      this.elementService.hoverCardOpen.set('open');
+      this.elementService.activatePopover(point.x, point.y, id);
 
       this.anchorElement.nativeElement.style.left = `${point.x}px`;
       this.anchorElement.nativeElement.style.top = `${point.y}px`;
     });
     newCircle.on('mouseout', () => {
-      this.elementService.hoverCardOpen.set('closed');
-      this.elementService.setHoveredElement(undefined);
+      this.hoverCloseTimeout = setTimeout(() => {
+        this.elementService.deactivatePopover();
+      }, 150);
     });
 
     this.circles.set(id, newCircle);

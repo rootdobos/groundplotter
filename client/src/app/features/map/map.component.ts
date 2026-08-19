@@ -84,4 +84,11 @@ export class MapComponent implements AfterViewInit {
   getUndeployedElements() {
     return this.elementService.getUndeployedElements();
   }
+  onHoverCardMouseEntered(){
+    this.elementService.preventHoverCardClose.set(true);
+  }
+  onHoverCardMouseLeft(){
+    this.elementService.preventHoverCardClose.set(false);
+    this.elementService.deactivatePopover();
+  }
 }
