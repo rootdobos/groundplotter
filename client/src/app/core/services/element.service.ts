@@ -42,8 +42,7 @@ export class ElementService {
     );
   }
 
-  activatePopover(x: number, y: number, id: string) {
-    this.hoverPosition.set({ x, y });
+  activatePopover(id: string) {
     this.setHoveredElement(id);
     this.hoverCardOpen.set('open');
   }

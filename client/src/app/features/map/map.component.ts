@@ -56,9 +56,6 @@ export class MapComponent implements AfterViewInit {
   getPopoverState() {
     return this.elementService.hoverCardOpen();
   }
-  getHoverPosition() {
-    return this.elementService.hoverPosition();
-  }
   getHoveredElement() {
     return this.elementService.hoveredElement();
   }

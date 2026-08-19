@@ -119,20 +119,28 @@ export class MapService {
       L.DomEvent.stopPropagation(event);
     });
     newCircle.on('mouseover', (event: L.LeafletMouseEvent) => {
-      clearTimeout(this.hoverCloseTimeout);
-      const point = this.map.latLngToContainerPoint(event.latlng);
-      this.elementService.activatePopover(point.x, point.y, id);
-
-      this.anchorElement.nativeElement.style.left = `${point.x}px`;
-      this.anchorElement.nativeElement.style.top = `${point.y}px`;
+      this.activatePopover(id);
     });
     newCircle.on('mouseout', () => {
       this.hoverCloseTimeout = setTimeout(() => {
-        this.elementService.deactivatePopover();
+        this.deactivatePopover();
       }, 150);
     });
 
     this.circles.set(id, newCircle);
+  }
+  activatePopover(id: string) {
+    clearTimeout(this.hoverCloseTimeout);
+
+    const circle = this.circles.get(id);
+    const point = this.map.latLngToContainerPoint(circle!.getLatLng());
+
+    this.elementService.activatePopover(id);
+    this.anchorElement.nativeElement.style.left = `${point.x}px`;
+    this.anchorElement.nativeElement.style.top = `${point.y}px`;
+  }
+  deactivatePopover() {
+    this.elementService.deactivatePopover();
   }
   private deleteCircle(id: string) {
     if (this.deletionEnabled()) {

@@ -4,7 +4,7 @@
     <hlm-command-group>
       <hlm-command-group-label>Elements</hlm-command-group-label>
       @for (element of elementService.deployedElements(); track element.id) {
-        <button hlm-command-item value={{element.name}}>
+        <button hlm-command-item (mouseover)="onElementMouseOver(element.id)" (mouseleave)="onElementMouseLeft()" value={{element.name}}>
           {{element.name}}
         </button>
       }
