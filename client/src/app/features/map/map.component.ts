@@ -1,6 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, effect, inject } from '@angular/core';
 import * as L from 'leaflet';
 import { ElementService } from '../../core/services/element.service';
+import { MapService } from '../../core/services/map.service';
 
 @Component({
   selector: 'app-map',
@@ -9,83 +10,19 @@ import { ElementService } from '../../core/services/element.service';
   styleUrl: './map.component.css',
 })
 export class MapComponent implements AfterViewInit {
-  private resizeObserver!: ResizeObserver;
-  private map!: L.Map;
-  private cdr = inject(ChangeDetectorRef);
   private elementService = inject(ElementService);
-  private selectedPoint?: L.Circle;
+  private mapService = inject(MapService);
   constructor() {
     effect(() => {
       const elements = this.elementService.elements();
-      if (!this.map) {
+      if (!this.mapService.map) {
         return;
       }
 
-      this.elementService.addCirclesFromElements(this.map, elements);
+      this.mapService.addCirclesFromElements(elements);
     });
   }
   ngAfterViewInit(): void {
-    // image coordinates need to be stored
-    const bounds: L.LatLngBoundsExpression = [
-      [0, 0],
-      [1893, 2364],
-    ];
-    this.map = L.map('map', {
-      crs: L.CRS.Simple,
-
-      scrollWheelZoom: false,
-      doubleClickZoom: false,
-      touchZoom: false,
-      boxZoom: false,
-      keyboard: false,
-
-      minZoom: -10,
-      zoomSnap: 0,
-      zoomDelta: 0.1,
-      zoomControl: false,
-      dragging: false,
-    });
-
-    L.imageOverlay(
-      'https://static.dezeen.com/uploads/2017/11/the-vault-house-obba-architecture_dezeen_2364_site-plan.gif',
-      bounds,
-    ).addTo(this.map);
-    this.map.invalidateSize();
-    this.map.fitBounds(bounds);
-
-    const latLngBounds = L.latLngBounds(bounds);
-    const zoom = this.map.getBoundsZoom(latLngBounds, false);
-    this.map.setMinZoom(zoom);
-    this.map.setMaxZoom(zoom);
-
-    this.elementService.addCirclesFromElements(this.map, this.elementService.elements());
-    //--------------this code doesn't work yet
-    const mapElement = document.getElementById('map')!;
-    this.resizeObserver = new ResizeObserver(() => {
-      requestAnimationFrame(() => {
-        this.map.invalidateSize({
-          animate: false,
-          pan: false,
-        });
-        this.map.fitBounds(bounds, { animate: false });
-        this.cdr.detectChanges();
-      });
-    });
-    this.resizeObserver.observe(mapElement);
-    //------------
-    //draw the elements by coordinates
-    const deployedElements = this.elementService.getDeployedElements();
-    deployedElements.forEach((coord) => {
-      L.circle([coord.y, coord.x], { radius: 10 }).addTo(this.map);
-    });
-    //add element on clicking
-    this.map.on('click', (event: L.LeafletMouseEvent) => {
-      //this.selectedPoint?.remove();
-      this.elementService.addCircleFromMap(this.map, event.latlng);
-    });
-  }
-  ngOnDestroy(): void {
-    this.resizeObserver?.disconnect();
-    this.map?.remove();
+    this.mapService.initializeMap(this.elementService.elements())
   }
 }
