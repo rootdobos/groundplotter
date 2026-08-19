@@ -18,7 +18,9 @@
       "@spartan-ng/helm/input-group": ["./libs/ui/input-group/src/index.ts"],
       "@spartan-ng/helm/input": ["./libs/ui/input/src/index.ts"],
       "@spartan-ng/helm/textarea": ["./libs/ui/textarea/src/index.ts"],
-      "@spartan-ng/helm/dialog": ["./libs/ui/dialog/src/index.ts"]
+      "@spartan-ng/helm/dialog": ["./libs/ui/dialog/src/index.ts"],
+      "@spartan-ng/helm/hover-card": ["./libs/ui/hover-card/src/index.ts"],
+      "@spartan-ng/helm/popover": ["./libs/ui/popover/src/index.ts"]
     }
   },
   "angularCompilerOptions": {

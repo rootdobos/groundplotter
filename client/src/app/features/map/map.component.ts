@@ -1,11 +1,11 @@
 import { AfterViewInit, ChangeDetectorRef, Component, effect, inject } from '@angular/core';
-import * as L from 'leaflet';
 import { ElementService } from '../../core/services/element.service';
 import { MapService } from '../../core/services/map.service';
+import { HlmPopoverImports } from "../../../../libs/ui/popover/src";
 
 @Component({
   selector: 'app-map',
-  imports: [],
+  imports: [HlmPopoverImports],
   templateUrl: './map.component.html',
   styleUrl: './map.component.css',
 })
@@ -24,5 +24,14 @@ export class MapComponent implements AfterViewInit {
   }
   ngAfterViewInit(): void {
     this.mapService.initializeMap(this.elementService.elements())
+  }
+  getPopoverState(){
+    return this.elementService.hoverCardOpen();
+  }
+  getHoverPosition(){
+    return this.elementService.hoverPosition()
+  }
+  getHoveredElement(){
+    return this.elementService.hoveredElement()
   }
 }

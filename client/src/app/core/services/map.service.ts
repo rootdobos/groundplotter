@@ -1,11 +1,12 @@
-import { Service } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { Element } from '../models/element';
 import * as L from 'leaflet';
+import { ElementService } from './element.service';
 @Service()
 export class MapService {
   map!: L.Map;
   private circles: Map<string, L.Circle> = new Map();
-
+  private elementService = inject(ElementService);
   private resizeObserver!: ResizeObserver;
   initializeMap(elements: Element[]) {
         // image coordinates need to be stored
@@ -100,6 +101,16 @@ export class MapService {
     newCircle.on('click', (event: L.LeafletMouseEvent) => {
       L.DomEvent.stopPropagation(event);
     });
+    newCircle.on('mouseover',(event: L.LeafletMouseEvent) =>{
+        const point = this.map.latLngToContainerPoint(event.latlng);
+        this.elementService.hoverPosition.set({x:point.x, y:point.y});
+        this.elementService.setHoveredElement(id)
+        this.elementService.hoverCardOpen.set('open');
+
+    });
+    newCircle.on('mouseout', ()=>{
+        this.elementService.hoverCardOpen.set('closed');
+    })
 
     this.circles.set(id, newCircle);
   }
