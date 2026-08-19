@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, inject } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, effect, inject } from '@angular/core';
 import * as L from 'leaflet';
 import { ElementService } from '../../core/services/element.service';
 
@@ -14,6 +14,16 @@ export class MapComponent implements AfterViewInit {
   private cdr = inject(ChangeDetectorRef);
   private elementService = inject(ElementService);
   private selectedPoint?: L.Circle;
+  constructor() {
+    effect(() => {
+      const elements = this.elementService.elements();
+      if (!this.map) {
+        return;
+      }
+
+      this.elementService.addCirclesFromElements(this.map, elements);
+    });
+  }
   ngAfterViewInit(): void {
     // image coordinates need to be stored
     const bounds: L.LatLngBoundsExpression = [
@@ -48,7 +58,7 @@ export class MapComponent implements AfterViewInit {
     this.map.setMinZoom(zoom);
     this.map.setMaxZoom(zoom);
 
-    this.elementService.initializeCircles(this.map);
+    this.elementService.addCirclesFromElements(this.map, this.elementService.elements());
     //--------------this code doesn't work yet
     const mapElement = document.getElementById('map')!;
     this.resizeObserver = new ResizeObserver(() => {
@@ -71,7 +81,7 @@ export class MapComponent implements AfterViewInit {
     //add element on clicking
     this.map.on('click', (event: L.LeafletMouseEvent) => {
       //this.selectedPoint?.remove();
-      this.elementService.addCircleFromMap(this.map, event.latlng)
+      this.elementService.addCircleFromMap(this.map, event.latlng);
     });
   }
   ngOnDestroy(): void {

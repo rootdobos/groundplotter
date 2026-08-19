@@ -27,13 +27,11 @@ export class ElementService {
   getDeployedElements() {
     return [{ x: 200, y: 300 }];
   }
-  initializeCircles(map: L.Map) {
+  addCirclesFromElements(map: L.Map, elements: Element[]) {
+    this.clearCircles();
     const color = '#ff8200';
-    console.log('Letsgo');
-    console.log(this.elements());
-    this.elements().forEach((element) => {
+    elements.forEach((element) => {
       if (element.coordinates) {
-        console.log('hello');
         this.addCircle(
           map,
           element.coordinates[0],
@@ -60,11 +58,9 @@ export class ElementService {
     //the key has to be the id of the element
 
     newCircle.on('click', (event: L.LeafletMouseEvent) => {
-      console.log(`hey I'm circle ${id}`);
       L.DomEvent.stopPropagation(event);
     });
 
-    console.log(`Creation ${id}`);
     this.circles.set(id, newCircle);
   }
   private clearCircles(): void {
