@@ -16,10 +16,19 @@ import { BrnDialogState } from '@spartan-ng/brain/dialog';
 import { HlmSelectImports } from '@spartan-ng/helm/select';
 import { Element } from '../../core/models/element';
 import { HlmBadgeImports } from '@spartan-ng/helm/badge';
+import { HlmButtonGroup, HlmButtonGroupImports } from '@spartan-ng/helm/button-group';
+import { HlmButtonImports } from '@spartan-ng/helm/button';
 
 @Component({
   selector: 'app-map',
-  imports: [HlmPopoverImports, HlmDialogImports, HlmSelectImports, HlmBadgeImports],
+  imports: [
+    HlmPopoverImports,
+    HlmDialogImports,
+    HlmSelectImports,
+    HlmBadgeImports,
+    HlmButtonImports,
+    HlmButtonGroupImports,
+  ],
   templateUrl: './map.component.html',
   styleUrl: './map.component.css',
 })
@@ -69,12 +78,12 @@ export class MapComponent implements AfterViewInit {
     console.log('Saving:', selectedElement);
     const clickPosition = this.mapService.clickPosition();
     this.elementService.deployElement(selectedElement.id, [clickPosition!.lat, clickPosition!.lng]);
-    this.mapService.addCircleAfterMapDialog(
-      clickPosition!.lat,
-      clickPosition!.lng,
-      selectedElement.id.toString(),
-    );
-    this.selectedElement.set(null)
+    // this.mapService.addCircleAfterMapDialog(
+    //   clickPosition!.lat,
+    //   clickPosition!.lng,
+    //   selectedElement.id.toString(),
+    // );
+    this.selectedElement.set(null);
     this.setAddMapElementState('closed');
   }
   setSelectedElementId($event: string | null | undefined) {
@@ -82,12 +91,12 @@ export class MapComponent implements AfterViewInit {
     this.selectedElement.set(found);
   }
   getUndeployedElements() {
-    return this.elementService.getUndeployedElements();
+    return this.elementService.undeployedElements();
   }
-  onHoverCardMouseEntered(){
+  onHoverCardMouseEntered() {
     this.elementService.preventHoverCardClose.set(true);
   }
-  onHoverCardMouseLeft(){
+  onHoverCardMouseLeft() {
     this.elementService.preventHoverCardClose.set(false);
     this.elementService.deactivatePopover();
   }

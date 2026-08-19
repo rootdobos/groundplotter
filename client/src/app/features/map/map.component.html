@@ -61,15 +61,18 @@
       </hlm-select>
     </div>
     <hlm-dialog-footer>
-      <button hlmBtn variant="outline" hlmDialogClose>Cancel</button>
-      <button
-        hlmBtn
-        type="button"
-        [disabled]="selectedElement() === null"
-        (click)="saveSelectedItem()"
-      >
-        Save
-      </button>
+      <div hlmButtonGroup>
+        <button hlmBtn variant="outline" hlmDialogClose>Cancel</button>
+        <button
+          hlmBtn
+          type="button"
+          variant="outline"
+          [disabled]="selectedElement() === null"
+          (click)="saveSelectedItem()"
+        >
+          Save
+        </button>
+      </div>
     </hlm-dialog-footer>
   </hlm-dialog-content>
 </hlm-dialog>

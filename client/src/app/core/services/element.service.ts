@@ -8,7 +8,12 @@ import { BrnOverlayState } from '@spartan-ng/brain/overlay';
 export class ElementService {
   private http = inject(HttpClient);
   elements = signal<Element[]>([]);
-
+  deployedElements = computed(() => {
+    return this.elements().filter((el) => el.coordinates);
+  });
+  undeployedElements = computed(()=>{
+    return this.elements().filter((el) => !el.coordinates);
+  })
   hoveredElement = signal<Element | undefined>(undefined);
   hoverPosition = signal({ x: 0, y: 0 });
   hoverCardOpen = signal<BrnOverlayState>('closed');
@@ -26,23 +31,17 @@ export class ElementService {
     });
   }
 
-  getUndeployedElements() {
-    return this.elements().filter((el) => !el.coordinates);
-  }
-
   deployElement(id: number, coordinates: number[]) {
-    const index = this.elements().findIndex((el) => el.id === id);
-    if (index !== -1) {
-      this.elements.update((oldElements) => {
-        oldElements[index].coordinates = coordinates;
-        return oldElements;
-      });
-    }
+    this.elements.update((elements) =>
+      elements.map((el) => (el.id === id ? { ...el, coordinates: [...coordinates] } : el)),
+    );
+  }
+  undeployElement(id: number){
+    this.elements.update((elements) =>
+      elements.map((el) => (el.id === id ? { ...el, coordinates: undefined } : el)),
+    );
   }
 
-  getDeployedElements() {
-    return [{ x: 200, y: 300 }];
-  }
   activatePopover(x: number, y: number, id: string) {
     this.hoverPosition.set({ x, y });
     this.setHoveredElement(id);

@@ -1,13 +1,31 @@
-<header class="flex shadow-md shadow-black/20 dark:shadow-black/60 w-full px-3 h-12 fixed z-50 top-0 bg-accent">
-    <div class="flex align-middle left-0">
-        <nav class="flex gap-3 my-2 text-xl">
-            <a href="">Home</a>
-            <a href="">Projects</a>
-        </nav>
-    </div>
-    <div class="flex align-middle ml-auto right-0">
-        <button hlmBtn size="icon" class="cursor-pointer my-1" variant="outline" (click)="theme.toggle()">
-            <ng-icon name="tablerSunMoon"/>
-        </button>
-    </div>
+<header
+  class="flex shadow-md shadow-black/20 dark:shadow-black/60 w-full px-3 h-12 fixed z-50 top-0 bg-accent"
+>
+  <div class="flex align-middle left-0">
+    <nav class="flex gap-3 my-2 text-xl">
+      <a href="">Home</a>
+      <a href="">Projects</a>
+    </nav>
+  </div>
+  <div class="flex align-middle ml-auto right-0 gap-2">
+    <button
+      hlmToggle
+      variant="outline"
+      class="cursor-pointer my-1 data-[state=on]:bg-primary data-[state=on]:text-secondary"
+      [state]="mapService.deletionEnabled() ? 'on' : 'off'"
+      (stateChange)="onRemoveModeChanged($event)"
+    >
+      <ng-icon name="tablerScissors" />
+      Click Remove
+    </button>
+    <button
+      hlmBtn
+      size="icon"
+      class="cursor-pointer my-1 ml-4"
+      variant="outline"
+      (click)="theme.toggle()"
+    >
+      <ng-icon name="tablerSunMoon" />
+    </button>
+  </div>
 </header>

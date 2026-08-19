@@ -14,6 +14,11 @@ export class MapService {
 
   private hoverCloseTimeout?: ReturnType<typeof setTimeout>;
 
+  deletionEnabled = signal(false);
+
+  focusColor = '#008200';
+  normalColor = '#ff8200';
+
   addMapElementDialogState = signal<BrnDialogState>('closed');
   clickPosition = signal<{ lat: number; lng: number } | null>(null);
   initializeMap(elements: Element[]) {
@@ -78,19 +83,17 @@ export class MapService {
 
   addCirclesFromElements(elements: Element[]) {
     this.clearCircles();
-    const color = '#ff8200';
     elements.forEach((element) => {
       if (element.coordinates) {
         this.addCircle(
           element.coordinates[0],
           element.coordinates[1],
           element.id.toString(),
-          color,
+          this.normalColor,
         );
       }
     });
   }
-  color = '#008200';
   triggerAddCircleFromMapDialog(latLng: L.LatLng) {
     const { lat, lng } = latLng;
     this.clickPosition.set({
@@ -100,7 +103,7 @@ export class MapService {
     this.addMapElementDialogState.set('open');
   }
   addCircleAfterMapDialog(lat: number, lng: number, id: string) {
-    this.addCircle(lat, lng, id, this.color);
+    this.addCircle(lat, lng, id, this.normalColor);
   }
   addCircle(lat: number, lng: number, id: string, color: string) {
     const newCircle = L.circle([lat, lng], {
@@ -112,6 +115,7 @@ export class MapService {
     //the key has to be the id of the element
 
     newCircle.on('click', (event: L.LeafletMouseEvent) => {
+      this.deleteCircle(id);
       L.DomEvent.stopPropagation(event);
     });
     newCircle.on('mouseover', (event: L.LeafletMouseEvent) => {
@@ -129,6 +133,13 @@ export class MapService {
     });
 
     this.circles.set(id, newCircle);
+  }
+  private deleteCircle(id: string) {
+    if (this.deletionEnabled()) {
+      this.circles.get(id)!.remove();
+      this.circles.delete(id);
+      this.elementService.undeployElement(+id);
+    }
   }
   private clearCircles(): void {
     this.circles.forEach((circle) => circle.remove());
