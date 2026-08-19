@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import * as L from 'leaflet';
 import { Element } from '../models/element';
 import { BrnOverlayState } from '@spartan-ng/brain/overlay';
+
 @Service()
 export class ElementService {
   private http = inject(HttpClient);
@@ -11,6 +12,7 @@ export class ElementService {
   hoveredElement = signal<Element | undefined>(undefined);
   hoverPosition = signal({x:0, y:0});
   hoverCardOpen = signal<BrnOverlayState>('closed');
+
 
   groups = computed(() => {
     const all = this.elements().map((p) => p.group);
@@ -23,6 +25,21 @@ export class ElementService {
       },
     });
   }
+  
+  getUndeployedElements(){
+    return this.elements().filter((el)=> !el.coordinates)
+  }
+
+  deployElement(id: number, coordinates:number[]){
+    const index = this.elements().findIndex(el => el.id === id)
+    if( index !== -1){
+      this.elements.update((oldElements)=>{
+        oldElements[index].coordinates=coordinates
+        return oldElements
+      })
+    }
+  }
+
   getDeployedElements() {
     return [{ x: 200, y: 300 }];
   }

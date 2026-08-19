@@ -15,7 +15,57 @@
 
   <hlm-popover-content *hlmPopoverPortal="let ctx">
     @if (getHoveredElement(); as el) {
-      <p>{{ el.name }}</p>
+      <h2 class="text-base mx-auto font-semibold leading-tight tracking-tight">{{ el.name }}</h2>
+      <p class="mt-1 text-sm text-muted-foreground">
+        Group: <span class="font-medium text-foreground">{{ el.group }}</span>
+      </p>
+      <div class="flex w-full flex-wrap gap-2">
+        @for (et of el.tag; track et) {
+          <span hlmBadge>{{ et }}</span>
+        }
+      </div>
     }
   </hlm-popover-content>
 </hlm-popover>
+
+<hlm-dialog [state]="getAddMapElementState()" (stateChanged)="setAddMapElementState($event)">
+  <button hlmDialogTrigger hlmBtn variant="outline">Open Dialog</button>
+  <hlm-dialog-content *hlmDialogPortal="let ctx" class="sm:max-w-sm">
+    <hlm-dialog-header>
+      <h3 hlmDialogTitle>Add new item on the map</h3>
+      <p hlmDialogDescription>
+        Choose a remaining item from the list. The item will be placed on the map.
+      </p>
+    </hlm-dialog-header>
+    <div class="py-4">
+      <label class="mb-2 block text-sm font-medium"> Item</label>
+      <hlm-select
+        class="w-full"
+        [value]="selectedElement()?.id?.toString()"
+        (valueChange)="setSelectedElementId($event)"
+      >
+        <hlm-select-trigger class="w-full">
+          <span>{{ selectedElement()?.name ?? 'Select an item' }}</span>
+        </hlm-select-trigger>
+        <hlm-select-content *hlmSelectPortal>
+          @for (item of getUndeployedElements(); track item.id) {
+            <hlm-select-item [value]="item.id.toString()">
+              {{ item.name }}
+            </hlm-select-item>
+          }
+        </hlm-select-content>
+      </hlm-select>
+    </div>
+    <hlm-dialog-footer>
+      <button hlmBtn variant="outline" hlmDialogClose>Cancel</button>
+      <button
+        hlmBtn
+        type="button"
+        [disabled]="selectedElement() === null"
+        (click)="saveSelectedItem()"
+      >
+        Save
+      </button>
+    </hlm-dialog-footer>
+  </hlm-dialog-content>
+</hlm-dialog>

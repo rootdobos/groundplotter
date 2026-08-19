@@ -1,15 +1,19 @@
-import { ElementRef, inject, Service } from '@angular/core';
+import { ElementRef, inject, Service, signal } from '@angular/core';
 import { Element } from '../models/element';
 import * as L from 'leaflet';
 import { ElementService } from './element.service';
+import { BrnDialogState } from '@spartan-ng/brain/dialog';
 @Service()
 export class MapService {
   map!: L.Map;
+  private circleRadius = 15;
   private circles: Map<string, L.Circle> = new Map();
   private elementService = inject(ElementService);
   private resizeObserver!: ResizeObserver;
   anchorElement!: ElementRef<HTMLDivElement>;
-  
+
+  addMapElementDialogState = signal<BrnDialogState>('closed');
+  clickPosition = signal<{ lat: number; lng: number } | null>(null);
   initializeMap(elements: Element[]) {
     // image coordinates need to be stored
     const bounds: L.LatLngBoundsExpression = [
@@ -66,7 +70,7 @@ export class MapService {
     //add element on clicking
     this.map.on('click', (event: L.LeafletMouseEvent) => {
       //this.selectedPoint?.remove();
-      this.addCircleFromMap(event.latlng);
+      this.triggerAddCircleFromMapDialog(event.latlng);
     });
   }
 
@@ -84,16 +88,21 @@ export class MapService {
       }
     });
   }
-
-  addCircleFromMap(latLng: L.LatLng) {
+  color = '#008200';
+  triggerAddCircleFromMapDialog(latLng: L.LatLng) {
     const { lat, lng } = latLng;
-    const color = '#008200';
-    const key = `${lat} ${lng}`;
-    this.addCircle(lat, lng, key, color);
+    this.clickPosition.set({
+      lat,
+      lng,
+    });
+    this.addMapElementDialogState.set('open');
+  }
+  addCircleAfterMapDialog(lat:number, lng:number, id:string){
+    this.addCircle(lat,lng,id, this.color)
   }
   addCircle(lat: number, lng: number, id: string, color: string) {
     const newCircle = L.circle([lat, lng], {
-      radius: 10,
+      radius: this.circleRadius,
       stroke: false,
       fillColor: color,
       fillOpacity: 1,

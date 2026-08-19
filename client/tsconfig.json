@@ -20,7 +20,9 @@
       "@spartan-ng/helm/textarea": ["./libs/ui/textarea/src/index.ts"],
       "@spartan-ng/helm/dialog": ["./libs/ui/dialog/src/index.ts"],
       "@spartan-ng/helm/hover-card": ["./libs/ui/hover-card/src/index.ts"],
-      "@spartan-ng/helm/popover": ["./libs/ui/popover/src/index.ts"]
+      "@spartan-ng/helm/popover": ["./libs/ui/popover/src/index.ts"],
+      "@spartan-ng/helm/select": ["./libs/ui/select/src/index.ts"],
+      "@spartan-ng/helm/badge": ["./libs/ui/badge/src/index.ts"]
     }
   },
   "angularCompilerOptions": {

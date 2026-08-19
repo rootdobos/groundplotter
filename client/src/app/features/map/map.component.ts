@@ -1,11 +1,25 @@
-import { AfterViewInit, ChangeDetectorRef, Component, effect, ElementRef, inject, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  effect,
+  ElementRef,
+  inject,
+  signal,
+  ViewChild,
+} from '@angular/core';
 import { ElementService } from '../../core/services/element.service';
 import { MapService } from '../../core/services/map.service';
-import { HlmPopoverImports } from "../../../../libs/ui/popover/src";
+import { HlmPopoverImports } from '../../../../libs/ui/popover/src';
+import { HlmDialogImports } from '@spartan-ng/helm/dialog';
+import { BrnDialogState } from '@spartan-ng/brain/dialog';
+import { HlmSelectImports } from '@spartan-ng/helm/select';
+import { Element } from '../../core/models/element';
+import { HlmBadgeImports } from '@spartan-ng/helm/badge';
 
 @Component({
   selector: 'app-map',
-  imports: [HlmPopoverImports],
+  imports: [HlmPopoverImports, HlmDialogImports, HlmSelectImports, HlmBadgeImports],
   templateUrl: './map.component.html',
   styleUrl: './map.component.css',
 })
@@ -15,6 +29,7 @@ export class MapComponent implements AfterViewInit {
 
   private elementService = inject(ElementService);
   private mapService = inject(MapService);
+  selectedElement = signal<Element | null | undefined>(null);
   constructor() {
     effect(() => {
       const elements = this.elementService.elements();
@@ -26,16 +41,47 @@ export class MapComponent implements AfterViewInit {
     });
   }
   ngAfterViewInit(): void {
-    this.mapService.initializeMap(this.elementService.elements())
+    this.mapService.initializeMap(this.elementService.elements());
     this.mapService.anchorElement = this.popoverAnchor;
   }
-  getPopoverState(){
+  getPopoverState() {
     return this.elementService.hoverCardOpen();
   }
-  getHoverPosition(){
-    return this.elementService.hoverPosition()
+  getHoverPosition() {
+    return this.elementService.hoverPosition();
   }
-  getHoveredElement(){
-    return this.elementService.hoveredElement()
+  getHoveredElement() {
+    return this.elementService.hoveredElement();
+  }
+
+  getAddMapElementState() {
+    return this.mapService.addMapElementDialogState();
+  }
+  setAddMapElementState($event: BrnDialogState) {
+    this.mapService.addMapElementDialogState.set($event);
+  }
+  // onMapElementSelected(value:string){
+  //   this.selectedElementId.set(value);
+  // }
+  saveSelectedItem() {
+    const selectedElement = this.selectedElement();
+    if (!selectedElement) return;
+    console.log('Saving:', selectedElement);
+    const clickPosition = this.mapService.clickPosition();
+    this.elementService.deployElement(selectedElement.id, [clickPosition!.lat, clickPosition!.lng]);
+    this.mapService.addCircleAfterMapDialog(
+      clickPosition!.lat,
+      clickPosition!.lng,
+      selectedElement.id.toString(),
+    );
+    this.selectedElement.set(null)
+    this.setAddMapElementState('closed');
+  }
+  setSelectedElementId($event: string | null | undefined) {
+    const found = this.getUndeployedElements().find((e) => e.id.toString() === $event) ?? null;
+    this.selectedElement.set(found);
+  }
+  getUndeployedElements() {
+    return this.elementService.getUndeployedElements();
   }
 }
