@@ -3,61 +3,71 @@
     "id": 1,
     "name": "Bulbasaur",
     "group": "medium",
-    "tag": ["Grass", "Poison"]
+    "tag": ["Grass", "Poison"],
+    "coordinates": [1309, 456]
   },
   {
     "id": 2,
     "name": "Ivysaur",
     "group": "medium",
-    "tag": ["Grass", "Poison"]
+    "tag": ["Grass", "Poison"],
+    "coordinates": [51, 1126]
   },
   {
     "id": 3,
     "name": "Venusaur",
     "group": "large",
-    "tag": ["Grass", "Poison"]
+    "tag": ["Grass", "Poison"],
+    "coordinates": [501, 914]
   },
   {
     "id": 4,
     "name": "Charmander",
     "group": "small",
-    "tag": ["Fire"]
+    "tag": ["Fire"],
+    "coordinates": [285, 419]
   },
   {
     "id": 5,
     "name": "Charmeleon",
     "group": "medium",
-    "tag": ["Fire"]
+    "tag": ["Fire"],
+    "coordinates": [1385, 356]
   },
   {
     "id": 6,
     "name": "Charizard",
     "group": "large",
-    "tag": ["Fire", "Flying"]
+    "tag": ["Fire", "Flying"],
+    "coordinates": [1209, 1728]
   },
   {
     "id": 7,
     "name": "Squirtle",
     "group": "small",
-    "tag": ["Water"]
+    "tag": ["Water"],
+    "coordinates": [65, 122]
   },
   {
     "id": 8,
     "name": "Wartortle",
     "group": "medium",
-    "tag": ["Water"]
+    "tag": ["Water"],
+    "coordinates": [191, 895]
   },
   {
     "id": 9,
     "name": "Blastoise",
     "group": "large",
-    "tag": ["Water"]
+    "tag": ["Water"],
+    "coordinates": [476, 2069]
   },
   {
     "id": 10,
     "name": "Caterpie",
     "group": "small",
-    "tag": ["Bug"]
+    "tag": ["Bug"],
+    "coordinates": [1232, 108]
   },
   {
     "id": 11,

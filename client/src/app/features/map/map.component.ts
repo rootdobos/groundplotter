@@ -32,8 +32,8 @@ export class MapComponent implements AfterViewInit {
       minZoom: -10,
       zoomSnap: 0,
       zoomDelta: 0.1,
-      zoomControl:false,
-      dragging: false
+      zoomControl: false,
+      dragging: false,
     });
 
     L.imageOverlay(
@@ -48,6 +48,7 @@ export class MapComponent implements AfterViewInit {
     this.map.setMinZoom(zoom);
     this.map.setMaxZoom(zoom);
 
+    this.elementService.initializeCircles(this.map);
     //--------------this code doesn't work yet
     const mapElement = document.getElementById('map')!;
     this.resizeObserver = new ResizeObserver(() => {
@@ -69,11 +70,8 @@ export class MapComponent implements AfterViewInit {
     });
     //add element on clicking
     this.map.on('click', (event: L.LeafletMouseEvent) => {
-      this.selectedPoint?.remove();
-      const { lat, lng } = event.latlng;
-      this.selectedPoint = L.circle([lat, lng], {
-        radius: 10,
-      }).addTo(this.map);
+      //this.selectedPoint?.remove();
+      this.elementService.addCircleFromMap(this.map, event.latlng)
     });
   }
   ngOnDestroy(): void {
