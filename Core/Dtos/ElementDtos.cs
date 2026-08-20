@@ -1,0 +1,12 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Core.Dtos
+{
+    public record CreateElementRequest(string Name, string? Description, string? ImageUrl);
+    public record UpdateElementRequest(string Name, string? Description, string? ImageUrl);
+    public record ElementResponse(int Id, string Name, string? Description, string? ImageUrl, string Status);
+}

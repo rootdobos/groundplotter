@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace Core.Interfaces
 {
-    public interface IMapRepository : IGenericRepository<Map>
+    public interface IElementRepository: IGenericRepository<Element>
     {
-
     }
 }

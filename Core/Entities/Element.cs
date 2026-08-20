@@ -12,7 +12,7 @@ namespace Core.Entities
         public required string Name { get; set; }
         public string? Description { get; set; }
         public string? ImageUrl { get; set; }
-        public ElementStatus Status { get; set; }
+        public ElementStatus Status { get; set; } = ElementStatus.Undeployed;
 
         public ICollection<ElementDeployment> Deployments { get; set; } = [];
         public ICollection<ElementTag> Tags { get; set; } = [];
