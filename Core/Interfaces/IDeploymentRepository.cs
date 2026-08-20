@@ -1,4 +1,5 @@
-﻿using Core.Entities;
+﻿using Core.Dtos;
+using Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,6 @@ namespace Core.Interfaces
 {
     public interface IDeploymentRepository: IGenericRepository<ElementDeployment>
     {
+        Task<List<DeployedElementResponse>> GetDeployedElementsByMapId(int mapId);
     }
 }

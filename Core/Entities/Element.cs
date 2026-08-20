@@ -14,7 +14,6 @@ namespace Core.Entities
         public string? ImageUrl { get; set; }
         public ElementStatus Status { get; set; } = ElementStatus.Undeployed;
 
-        public ICollection<ElementDeployment> Deployments { get; set; } = [];
         public ICollection<ElementTag> Tags { get; set; } = [];
     }
 }

@@ -12,6 +12,5 @@ namespace Core.Entities
         public string? ImageUrl { get; set; }
         public int? Height { get; set; }
         public int? Width { get; set; }
-        public ICollection<ElementDeployment> Deployments { get; set; } = [];
     }
 }

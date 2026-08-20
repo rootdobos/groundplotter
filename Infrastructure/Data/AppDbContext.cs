@@ -22,10 +22,10 @@ namespace Infrastructure.Data
             modelBuilder.Entity<ElementDeployment>(entity =>
             {
                 entity.HasOne(e => e.Element)
-                        .WithMany(e => e.Deployments)
+                        .WithMany()
                         .HasForeignKey(e => e.ElementId);
                 entity.HasOne(e => e.Map)
-                        .WithMany(m => m.Deployments)
+                        .WithMany()
                         .HasForeignKey(e => e.MapId);
                 entity.HasIndex(e => new { e.ElementId, e.MapId }).IsUnique();
 

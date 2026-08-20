@@ -7,7 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
-    public class DeploymentController(IDeploymentRepository deploymentRepository, DeploymentService deploymentService):BaseApiController
+    public class DeploymentController(IDeploymentRepository deploymentRepository,
+        DeploymentService deploymentService, IMapRepository mapRepository):BaseApiController
     {
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Map>> GetDeployment(int id)
@@ -28,6 +29,15 @@ namespace Api.Controllers
                 return BadRequest("Element not found, already deployed, or map not found");
 
             return CreatedAtAction(nameof(GetDeployment), new { id = result.Id }, result);
+        }
+        [HttpGet]
+        public async Task<ActionResult<List<DeployedElementResponse>>> GetDeployedElements([FromQuery] int mapId)
+        {
+            var map = await mapRepository.GetByIdAsync(mapId);
+            if (map is null) return NotFound("Map Not Found");
+
+            var elements = await deploymentRepository.GetDeployedElementsByMapId(mapId);
+            return Ok(elements);
         }
     }
 }
