@@ -14,6 +14,7 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 });
 
 builder.Services.AddScoped<IMapRepository, MapRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();

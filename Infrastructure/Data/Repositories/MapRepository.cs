@@ -10,14 +10,14 @@ namespace Infrastructure.Data.Repositories
 {
     public class MapRepository(AppDbContext context) : IMapRepository
     {
+        public void AddMap(Map map)
+        {
+            context.Maps.Add(map);
+        }
+
         public async Task<Map?> GetMapById(int id)
         {
             return await context.Maps.FindAsync(id);
-        }
-
-        public async Task<bool> SaveChangesAsync()
-        {
-            return await context.SaveChangesAsync() > 0;
         }
 
         public void UpdateMap(Map map)

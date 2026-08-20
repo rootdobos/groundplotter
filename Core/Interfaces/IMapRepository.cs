@@ -10,7 +10,7 @@ namespace Core.Interfaces
     public interface IMapRepository
     {
         Task<Map?> GetMapById(int id);
+        void AddMap(Map map);
         void UpdateMap(Map map);
-        Task<bool> SaveChangesAsync();
     }
 }
