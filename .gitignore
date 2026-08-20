@@ -480,3 +480,4 @@ $RECYCLE.BIN/
 # Vim temporary swap files
 *.swp
 groundplotter.Api/appsettings.json
+.github/copilot-instructions.md
