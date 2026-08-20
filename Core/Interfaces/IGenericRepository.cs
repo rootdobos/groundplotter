@@ -9,10 +9,10 @@ namespace Core.Interfaces
 {
     public interface IGenericRepository<T> where T: BaseEntity
     {
-        Task<T> GetByIdAsync(int id);
+        Task<T?> GetByIdAsync(int id);
         void Add(T entity);
         void Update(T entity);
-        void Remove(T entity);
-        bool Exists(int id);
+        //void Remove(T entity);
+        //bool Exists(int id);
     }
 }

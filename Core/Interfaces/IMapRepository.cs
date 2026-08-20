@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Core.Interfaces
 {
-    public interface IMapRepository
+    public interface IMapRepository : IGenericRepository<Map>
     {
-        Task<Map?> GetMapById(int id);
-        void AddMap(Map map);
-        void UpdateMap(Map map);
+        //Task<Map?> GetMapById(int id);
+        //void AddMap(Map map);
+        //void UpdateMap(Map map);
     }
 }

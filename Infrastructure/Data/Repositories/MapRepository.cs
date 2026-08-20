@@ -8,21 +8,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Data.Repositories
 {
-    public class MapRepository(AppDbContext context) : IMapRepository
+    public class MapRepository(AppDbContext context) :GenericRepository<Map>(context), IMapRepository
     {
-        public void AddMap(Map map)
-        {
-            context.Maps.Add(map);
-        }
-
-        public async Task<Map?> GetMapById(int id)
-        {
-            return await context.Maps.FindAsync(id);
-        }
-
-        public void UpdateMap(Map map)
-        {
-            context.Maps.Update(map);
-        }
     }
 }

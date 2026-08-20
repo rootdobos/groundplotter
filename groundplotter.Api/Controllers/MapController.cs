@@ -9,7 +9,7 @@ namespace Api.Controllers
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Map>> GetMap(int id)
         {
-            var map = await mapRepository.GetMapById(id);
+            var map = await mapRepository.GetByIdAsync(id);
 
             if (map == null)
                 return NotFound();
@@ -21,7 +21,7 @@ namespace Api.Controllers
         {
             if (map.Id != id)
                 return BadRequest("Cannot update the map");
-            mapRepository.UpdateMap(map);
+            mapRepository.Update(map);
             if (await uow.SaveChangesAsync())
                 return NoContent();
             return BadRequest("Problem updating the map");
@@ -30,7 +30,7 @@ namespace Api.Controllers
         [HttpPost]
         public async Task<ActionResult<Map>> CreateMap(Map map)
         {
-            mapRepository.AddMap(map);
+            mapRepository.Add(map);
             if(await uow.SaveChangesAsync())
             {
                 return CreatedAtAction("GetMap", new { id = map.Id },map);
