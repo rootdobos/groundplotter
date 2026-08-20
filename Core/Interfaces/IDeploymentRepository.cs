@@ -10,6 +10,6 @@ namespace Core.Interfaces
 {
     public interface IDeploymentRepository: IGenericRepository<ElementDeployment>
     {
-        Task<List<DeployedElementResponse>> GetDeployedElementsByMapId(int mapId);
+        Task<List<DeployedElementResponse>> GetDeployedElementsByMapIdAsync(int mapId);
     }
 }

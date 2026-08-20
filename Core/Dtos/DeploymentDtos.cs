@@ -17,5 +17,6 @@ namespace Core.Dtos
         string? Description,
         string? ImageUrl,
         ElementStatus Status,
+        List<string> Tags,
         CoordinateDto Coordinates);
 }

@@ -12,13 +12,14 @@ namespace Infrastructure.Data.Repositories
 {
     public class DeploymentRepository(AppDbContext context) : GenericRepository<ElementDeployment>(context), IDeploymentRepository
     {
-        public async Task<List<DeployedElementResponse>> GetDeployedElementsByMapId(int mapId)
+        public async Task<List<DeployedElementResponse>> GetDeployedElementsByMapIdAsync(int mapId)
         {
             return await context.ElementsDeployment
                 .Where(d => d.MapId == mapId)
                 .Include(d => d.Element)
                 .Select(d => new DeployedElementResponse(
                     d.Element.Id, d.Element.Name, d.Element.Description, d.Element.ImageUrl, d.Element.Status,
+                    d.Element.Tags.Select(t => t.Tag.Name).ToList(),
                     new CoordinateDto(d.X, d.Y)))
                 .ToListAsync();
         }

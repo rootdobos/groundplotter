@@ -36,7 +36,7 @@ namespace Api.Controllers
             var map = await mapRepository.GetByIdAsync(mapId);
             if (map is null) return NotFound("Map Not Found");
 
-            var elements = await deploymentRepository.GetDeployedElementsByMapId(mapId);
+            var elements = await deploymentRepository.GetDeployedElementsByMapIdAsync(mapId);
             return Ok(elements);
         }
     }

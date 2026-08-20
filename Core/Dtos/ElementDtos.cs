@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,11 @@ namespace Core.Dtos
 {
     public record CreateElementRequest(string Name, string? Description, string? ImageUrl);
     public record UpdateElementRequest(string Name, string? Description, string? ImageUrl);
-    public record ElementResponse(int Id, string Name, string? Description, string? ImageUrl, string Status);
+    public record ElementResponse(
+    int Id,
+    string Name,
+    string? Description,
+    string? ImageUrl,
+    ElementStatus Status,
+    List<string> Tags);
 }
