@@ -20,6 +20,11 @@ namespace Infrastructure.Data.Repositories
             return await context.Set<T>().FindAsync(id);
         }
 
+        public void Remove(T entity)
+        {
+            context.Set<T>().Remove(entity);
+        }
+
         public void Update(T entity)
         {
             context.Set<T>().Update(entity);

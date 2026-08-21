@@ -9,6 +9,5 @@ namespace Core.Interfaces
 {
     public interface IMapRepository : IGenericRepository<Map>
     {
-
     }
 }

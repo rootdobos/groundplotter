@@ -39,5 +39,11 @@ namespace Api.Controllers
             var elements = await deploymentRepository.GetDeployedElementsByMapIdAsync(mapId);
             return Ok(elements);
         }
+        [HttpDelete]
+        public async Task<ActionResult> DeleteDeployment([FromQuery] int mapId, [FromQuery] int elementId)
+        {
+            var result = await deploymentService.DeleteDeploymentAsync(mapId, elementId);
+            return result ? NoContent() : NotFound();
+        }
     }
 }

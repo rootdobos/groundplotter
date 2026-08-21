@@ -23,5 +23,12 @@ namespace Infrastructure.Data.Repositories
                     new CoordinateDto(d.X, d.Y)))
                 .ToListAsync();
         }
+        public async Task<ElementDeployment?> GetByMapAndElementAsync(int mapId, int elementId)
+        {
+            return await context.ElementsDeployment
+                .Include(d => d.Element)
+                .Include(d => d.Map)
+                .FirstOrDefaultAsync(d => d.MapId == mapId && d.ElementId == elementId);
+        }
     }
 }

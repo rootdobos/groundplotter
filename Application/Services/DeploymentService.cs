@@ -47,5 +47,17 @@ namespace Application.Services
 
             return new DeploymentResponse(deployment.Id, element.Id, element.Name, map.Id, deployment.X, deployment.Y);
         }
+        public async Task<bool> DeleteDeploymentAsync(int mapId, int elementId)
+        {
+            var deployment = await deploymentRepository.GetByMapAndElementAsync(mapId, elementId);
+            if (deployment is null) return false;
+
+
+            deployment.Element.Status = ElementStatus.Undeployed;
+            deploymentRepository.Remove(deployment);
+
+            await uow.SaveChangesAsync();
+            return true;
+        }
     }
 }
