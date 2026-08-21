@@ -20,11 +20,11 @@
   >
     @if (getHoveredElement(); as el) {
       <h2 class="text-base mx-auto font-semibold leading-tight tracking-tight">{{ el.name }}</h2>
-      <!-- <p class="mt-1 text-sm text-muted-foreground">
-        Group: <span class="font-medium text-foreground">{{ el.group }}</span>
-      </p> -->
+      <p class="mt-1 text-sm text-muted-foreground">
+        Description: <span class="font-medium text-foreground">{{ el.description }}</span>
+      </p>
       <div class="flex w-full flex-wrap gap-2">
-        @for (et of el.tag; track et) {
+        @for (et of el.tags; track et) {
           <span hlmBadge>{{ et }}</span>
         }
       </div>

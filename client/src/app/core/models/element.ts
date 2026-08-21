@@ -4,7 +4,7 @@ export interface Element {
   description?: string;
   status: string;
   imageUrl?: string;
-  tag: string[];
+  tags: string[];
   coordinates?: Coordinates;
 }
 export interface Coordinates{

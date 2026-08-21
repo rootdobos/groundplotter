@@ -23,7 +23,7 @@ export class ElementService {
       next: (undeployed) => this.undeployedElements.set(undeployed),
     });
     effect(() => {
-      const mapId = this.workspaceService.selectedMapId();
+      const mapId = this.workspaceService.selectedMapData()?.id;
       if (!mapId) {
         this.deployedElements.set([]);
         this.undeployedElements.set([]);
@@ -40,15 +40,60 @@ export class ElementService {
         });
     });
   }
-  deployElement(id: number, coordinates: number[]) {
-    // this.elements.update((elements) =>
-    //   elements.map((el) => (el.id === id ? { ...el, coordinates: [...coordinates] } : el)),
-    // );
+  deployElement(id: number, y:number, x:number) {
+    
+    this.http.post(this.baseUrl + "deployment",{
+      elementId: id,
+      mapId: this.workspaceService.selectedMapData()!.id,
+      x:x,
+      y:y,
+
+    }).subscribe({
+      next: ()=>{
+        const element = this.undeployedElements().find((x) => x.id === id)
+        if(!element)
+          return
+        const deployedElement ={
+          ...element,
+          status: 'Deployed',
+          coordinates:{
+            x:x,
+            y:y
+          }
+        }
+        this.undeployedElements.update(elements=>{
+          return elements.filter(el => el.id !== id)
+        })
+        this.deployedElements.update(elements =>{
+          return [...elements, deployedElement]
+        })
+      }
+    })
   }
   undeployElement(id: number) {
-    // this.elements.update((elements) =>
-    //   elements.map((el) => (el.id === id ? { ...el, coordinates: undefined } : el)),
-    // );
+    this.http.delete(this.baseUrl + 'deployment',{
+      params:{
+        mapId: this.workspaceService.selectedMapData()!.id,
+        elementId: id
+      }
+    }).subscribe({
+      next:()=>{
+        const element = this.deployedElements().find((x) => x.id === id)
+        if(!element)
+          return
+        const {coordinates, ...baseElement} = element;
+        const undeployedElement = {
+          ...baseElement,
+          status: 'Undeployed'
+        }
+        this.deployedElements.update(elements=>{
+          return elements.filter(el => el.id !== id)
+        })
+        this.undeployedElements.update(elements =>{
+          return [...elements, undeployedElement]
+        })
+      }
+  })
   }
 
   activatePopover(id: string) {

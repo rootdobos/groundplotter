@@ -18,6 +18,7 @@ import { Element } from '../../core/models/element';
 import { HlmBadgeImports } from '@spartan-ng/helm/badge';
 import { HlmButtonGroup, HlmButtonGroupImports } from '@spartan-ng/helm/button-group';
 import { HlmButtonImports } from '@spartan-ng/helm/button';
+import { WorkspaceService } from '../../core/services/workspace.service';
 
 @Component({
   selector: 'app-map',
@@ -36,21 +37,28 @@ export class MapComponent implements AfterViewInit {
   @ViewChild('popoverAnchor')
   popoverAnchor!: ElementRef<HTMLDivElement>;
 
+  private workspaceService = inject(WorkspaceService);
   private elementService = inject(ElementService);
   private mapService = inject(MapService);
   selectedElement = signal<Element | null | undefined>(null);
+  private viewInitialized = signal(false);
   constructor() {
     effect(() => {
+      const mapData = this.workspaceService.selectedMapData();
+      if (mapData && this.viewInitialized()) {
+        this.mapService.initializeMap(mapData);
+      }
+    });
+    effect(() => {
       const elements = this.elementService.deployedElements();
-      if (!this.mapService.map) {
+      if (!this.mapService.mapInitialized()) {
         return;
       }
-
       this.mapService.addCirclesFromElements(elements);
     });
   }
   ngAfterViewInit(): void {
-    this.mapService.initializeMap(this.elementService.deployedElements());
+    this.viewInitialized.set(true);
     this.mapService.anchorElement = this.popoverAnchor;
   }
   getPopoverState() {
@@ -74,7 +82,7 @@ export class MapComponent implements AfterViewInit {
     if (!selectedElement) return;
     console.log('Saving:', selectedElement);
     const clickPosition = this.mapService.clickPosition();
-    this.elementService.deployElement(selectedElement.id, [clickPosition!.lat, clickPosition!.lng]);
+    this.elementService.deployElement(selectedElement.id, clickPosition!.lat, clickPosition!.lng);
     // this.mapService.addCircleAfterMapDialog(
     //   clickPosition!.lat,
     //   clickPosition!.lng,

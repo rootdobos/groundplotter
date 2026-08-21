@@ -3,6 +3,7 @@ import { Element } from '../models/element';
 import * as L from 'leaflet';
 import { ElementService } from './element.service';
 import { BrnDialogState } from '@spartan-ng/brain/dialog';
+import { MapData } from '../models/mapData';
 @Service()
 export class MapService {
   map!: L.Map;
@@ -15,17 +16,19 @@ export class MapService {
   private hoverCloseTimeout?: ReturnType<typeof setTimeout>;
 
   deletionEnabled = signal(false);
-
+  mapInitialized = signal(false);
   focusColor = '#008200';
   normalColor = '#ff8200';
 
   addMapElementDialogState = signal<BrnDialogState>('closed');
   clickPosition = signal<{ lat: number; lng: number } | null>(null);
-  initializeMap(elements: Element[]) {
+  initializeMap( mapData: MapData) {
+    this.mapInitialized.set(false);
+
     // image coordinates need to be stored
     const bounds: L.LatLngBoundsExpression = [
       [0, 0],
-      [1893, 2364],
+      [mapData.height, mapData.width],
     ];
     this.map = L.map('map', {
       crs: L.CRS.Simple,
@@ -44,7 +47,7 @@ export class MapService {
     });
 
     L.imageOverlay(
-      'https://static.dezeen.com/uploads/2017/11/the-vault-house-obba-architecture_dezeen_2364_site-plan.gif',
+      mapData.imageUrl,
       bounds,
     ).addTo(this.map);
     this.map.invalidateSize();
@@ -55,7 +58,7 @@ export class MapService {
     this.map.setMinZoom(zoom);
     this.map.setMaxZoom(zoom);
 
-    this.addCirclesFromElements(elements);
+    //this.addCirclesFromElements(elements);
     //--------------this code doesn't work yet
     const mapElement = document.getElementById('map')!;
     this.resizeObserver = new ResizeObserver(() => {
@@ -79,6 +82,7 @@ export class MapService {
       //this.selectedPoint?.remove();
       this.triggerAddCircleFromMapDialog(event.latlng);
     });
+    this.mapInitialized.set(true);
   }
 
   addCirclesFromElements(elements: Element[]) {
