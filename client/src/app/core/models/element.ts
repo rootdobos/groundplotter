@@ -1,7 +1,13 @@
 export interface Element {
   id: number;
   name: string;
-  group: 'small' | 'medium' | 'large';
+  description?: string;
+  status: string;
+  imageUrl?: string;
   tag: string[];
-  coordinates?: number[];
+  coordinates?: Coordinates;
+}
+export interface Coordinates{
+  x: number,
+  y: number
 }

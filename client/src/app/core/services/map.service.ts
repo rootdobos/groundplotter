@@ -86,8 +86,8 @@ export class MapService {
     elements.forEach((element) => {
       if (element.coordinates) {
         this.addCircle(
-          element.coordinates[0],
-          element.coordinates[1],
+          element.coordinates.y,
+          element.coordinates.x,
           element.id.toString(),
           this.normalColor,
         );

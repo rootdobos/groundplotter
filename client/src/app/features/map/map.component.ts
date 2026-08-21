@@ -41,7 +41,7 @@ export class MapComponent implements AfterViewInit {
   selectedElement = signal<Element | null | undefined>(null);
   constructor() {
     effect(() => {
-      const elements = this.elementService.elements();
+      const elements = this.elementService.deployedElements();
       if (!this.mapService.map) {
         return;
       }
@@ -50,7 +50,7 @@ export class MapComponent implements AfterViewInit {
     });
   }
   ngAfterViewInit(): void {
-    this.mapService.initializeMap(this.elementService.elements());
+    this.mapService.initializeMap(this.elementService.deployedElements());
     this.mapService.anchorElement = this.popoverAnchor;
   }
   getPopoverState() {
