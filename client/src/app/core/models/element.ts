@@ -1,3 +1,5 @@
+import { MapData } from "./mapData";
+
 export interface Element {
   id: number;
   name: string;
@@ -6,6 +8,7 @@ export interface Element {
   imageUrl?: string;
   tags: string[];
   coordinates?: Coordinates;
+  map?: MapData;
 }
 export interface Coordinates{
   x: number,

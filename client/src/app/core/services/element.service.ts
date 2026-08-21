@@ -40,6 +40,9 @@ export class ElementService {
         });
     });
   }
+  getAllElements(){
+    return this.http.get<Element[]>(this.baseUrl+ "element/all")
+  }
   deployElement(id: number, y:number, x:number) {
     
     this.http.post(this.baseUrl + "deployment",{

@@ -1,0 +1,16 @@
+<div class="grid grid-cols-5 gap-4 m-16">
+  @for (el of elements(); track el.id) {
+    <hlm-card>
+      <hlm-card-header>
+        <h3 hlmCardTitle>{{ el.name }}</h3>
+        <p hlmCardDescription>{{ el.description }}</p>
+        <div class="flex w-full flex-wrap gap-2">
+        @for (et of el.tags; track et) {
+          <span hlmBadge>{{ et }}</span>
+        }
+        </div>
+
+      </hlm-card-header>
+    </hlm-card>
+  }
+</div>
