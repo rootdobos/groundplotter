@@ -6,10 +6,11 @@ import { ThemeService } from '../../core/services/theme.service';
 import { HlmToggleImports } from '@spartan-ng/helm/toggle';
 import { HlmToasterImports } from '@spartan-ng/helm/sonner';
 import { MapService } from '../../core/services/map.service';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-header',
-  imports: [NgIcon, HlmButtonImports, HlmToggleImports, HlmToasterImports],
+  imports: [NgIcon, HlmButtonImports, HlmToggleImports, HlmToasterImports, RouterLink],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })

@@ -11,5 +11,6 @@ namespace Core.Interfaces
     public interface IElementRepository: IGenericRepository<Element>
     {
         Task<List<ElementResponse>> GetUndeployedElementsAsync();
+        Task<List<ElementWithMapResponse>> GetAllElementsAsync();
     }
 }

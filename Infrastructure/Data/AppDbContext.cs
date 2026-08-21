@@ -22,8 +22,8 @@ namespace Infrastructure.Data
             modelBuilder.Entity<ElementDeployment>(entity =>
             {
                 entity.HasOne(e => e.Element)
-                        .WithMany()
-                        .HasForeignKey(e => e.ElementId);
+                        .WithOne(e => e.Deployment)
+                        .HasForeignKey<ElementDeployment>(e => e.ElementId);
                 entity.HasOne(e => e.Map)
                         .WithMany()
                         .HasForeignKey(e => e.MapId);

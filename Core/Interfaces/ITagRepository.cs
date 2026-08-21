@@ -9,5 +9,6 @@ namespace Core.Interfaces
 {
     public interface ITagRepository: IGenericRepository<Tag>
     {
+        Task<IEnumerable<Tag>> GetAll();
     }
 }

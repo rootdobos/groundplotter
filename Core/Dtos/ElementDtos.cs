@@ -1,4 +1,5 @@
-﻿using Core.Enums;
+﻿using Core.Entities;
+using Core.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,12 @@ namespace Core.Dtos
     string? Description,
     string? ImageUrl,
     ElementStatus Status,
+    List<string> Tags);
+    public record ElementWithMapResponse(int Id,
+    string Name,
+    string? Description,
+    string? ImageUrl,
+    ElementStatus Status,
+    Map? Map,
     List<string> Tags);
 }

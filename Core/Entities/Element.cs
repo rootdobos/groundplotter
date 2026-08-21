@@ -15,5 +15,7 @@ namespace Core.Entities
         public ElementStatus Status { get; set; } = ElementStatus.Undeployed;
 
         public ICollection<ElementTag> Tags { get; set; } = [];
+
+        public ElementDeployment? Deployment { get; set; }
     }
 }

@@ -12,6 +12,22 @@ namespace Infrastructure.Data.Repositories
 {
     public class ElementRepository(AppDbContext context) : GenericRepository<Element>(context), IElementRepository
     {
+        public async Task<List<ElementWithMapResponse>> GetAllElementsAsync()
+        {
+            return await context.Elements
+                .Include(e => e.Deployment)
+                .ThenInclude(d => d.Map)
+                .Select(e => new ElementWithMapResponse(
+                    e.Id,
+                    e.Name,
+                    e.Description,
+                    e.ImageUrl,
+                    e.Status,
+                    e.Deployment == null ? null : e.Deployment.Map,
+                    e.Tags.Select(t => t.Tag.Name).ToList()))
+                .ToListAsync();
+        }
+
         public async Task<List<ElementResponse>> GetUndeployedElementsAsync()
         {
             return await context.Elements

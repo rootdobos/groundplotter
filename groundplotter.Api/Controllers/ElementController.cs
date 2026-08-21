@@ -24,7 +24,12 @@ namespace Api.Controllers
             var undeployedElements= await elementRepository.GetUndeployedElementsAsync();
             return Ok(undeployedElements);
         }
-
+        [HttpGet("all")]
+        public async Task<ActionResult<IReadOnlyList<ElementWithMapResponse>>> GetAllElements()
+        {
+            var elements = await elementRepository.GetAllElementsAsync();
+            return Ok(elements);
+        }
         [HttpPost]
         public async Task<ActionResult<Element>> CreateElement(CreateElementRequest request)
         {

@@ -8,7 +8,7 @@ namespace Api.Controllers
     public class TagController(ITagRepository tagRepository, IUnitOfWork uow): BaseApiController
     {
         [HttpPost]
-        public async Task<ActionResult<Tag>> CreateMap(Tag tag)
+        public async Task<ActionResult<Tag>> CreateTap(Tag tag)
         {
             tagRepository.Add(tag);
             if (await uow.SaveChangesAsync())
@@ -17,6 +17,12 @@ namespace Api.Controllers
             }
 
             return BadRequest("Problem creating the tag");
+        }
+        [HttpGet]
+        public async Task<ActionResult<Tag[]>> GetAllTag()
+        {
+            var tags = await tagRepository.GetAll();
+            return Ok(tags);
         }
     }
 }
